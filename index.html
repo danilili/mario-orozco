@@ -1,0 +1,1407 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mario Orozco — Catálogo de obra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper:        #f1e9d8;
+    --paper-deep:   #ece1c9;
+    --paper-soft:   #f7f1e3;
+    --ink:          #1f1b15;
+    --ink-soft:     #4a423a;
+    --ink-mute:     #8a8074;
+    --rule:         #c9bea4;
+    --rule-soft:    #d9cfb6;
+    --ochre:        oklch(0.55 0.08 65);
+    --ochre-deep:   oklch(0.42 0.08 60);
+
+    --serif: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+    --sans:  "Work Sans", system-ui, sans-serif;
+
+    --cols: 3; /* tweakable: grid density */
+    --gap: 56px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    max-width: 1480px; margin: 0 auto;
+    padding: 18px 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .brand-mark {
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .brand-mark img {
+    width: 30px; height: 30px;
+    object-fit: contain;
+  }
+  .brand-text {
+    line-height: 1.05;
+  }
+  .brand-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+  }
+  .brand-sub {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+
+  .navlinks {
+    display: flex; gap: 28px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-soft);
+  }
+  .navlinks a { position: relative; padding: 4px 0; }
+  .navlinks a:hover { color: var(--ochre-deep); }
+  .navlinks a.is-current { color: var(--ink); }
+  .navlinks a.is-current::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
+    height: 1px; background: var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    max-width: 1480px; margin: 0 auto;
+    padding: 110px 56px 80px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: end;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: var(--ink-mute);
+    margin-bottom: 36px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .hero-eyebrow::before {
+    content: ""; display: inline-block;
+    width: 36px; height: 1px; background: var(--ink-mute);
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(56px, 8vw, 132px);
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre-deep);
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 22px;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    max-width: 540px;
+  }
+  .hero-meta dt {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    padding-top: 3px;
+  }
+  .hero-meta dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink-soft);
+  }
+  .hero-aside {
+    padding-bottom: 12px;
+  }
+  .hero-aside p {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+    max-width: 440px;
+  }
+  .hero-aside p::first-letter {
+    font-size: 1.4em;
+    color: var(--ochre-deep);
+  }
+  .signature {
+    margin-top: 24px;
+    height: 96px;
+    width: auto;
+    max-width: 320px;
+    object-fit: contain;
+    opacity: 0.95;
+    /* Tone the ink slightly warmer to match the paper */
+    filter: contrast(1.05);
+  }
+  .signature-note {
+    font-family: var(--sans);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+
+  /* ---------- Index strip ---------- */
+  .index {
+    max-width: 1480px; margin: 0 auto;
+    padding: 56px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .index h2 {
+    font-family: var(--sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: var(--ink-mute);
+    margin: 6px 0 0;
+    font-weight: 500;
+  }
+  .index-list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+  .index-list li {
+    border-top: 1px solid var(--rule);
+    padding: 14px 24px 14px 0;
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    align-items: baseline;
+    gap: 18px;
+    transition: background 0.25s ease;
+  }
+  .index-list li:hover { background: color-mix(in srgb, var(--paper-deep) 50%, transparent); }
+  .index-list li:nth-last-child(1),
+  .index-list li:nth-last-child(2) {
+    border-bottom: 1px solid var(--rule);
+  }
+  .index-list a { display: contents; }
+  .index-num {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+  }
+  .index-name {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+  }
+  .index-count {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+
+  /* ---------- Category section ---------- */
+  .category {
+    max-width: 1480px; margin: 0 auto;
+    padding: 120px 56px 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cat-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+    padding-bottom: 56px;
+  }
+  .cat-eyebrow {
+    font-family: var(--sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: var(--ink-mute);
+    margin-bottom: 22px;
+  }
+  .cat-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(48px, 6vw, 92px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .cat-blurb {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 380px;
+    margin: 0;
+    text-align: right;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    gap: var(--gap) calc(var(--gap) * 0.7);
+  }
+
+  .piece { cursor: zoom-in; }
+  .piece-frame {
+    background: var(--paper-soft);
+    border: 1px solid var(--rule-soft);
+    padding: 18px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.5s ease;
+  }
+  .piece:hover .piece-frame {
+    border-color: var(--ink-soft);
+  }
+  .piece-img-wrap {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: var(--paper-deep);
+    overflow: hidden;
+    display: grid; place-items: center;
+  }
+  .piece-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .piece:hover .piece-img-wrap img { transform: scale(1.03); }
+
+  /* Reference photo chip pinned on top of the painting (retratos only) */
+  .piece-ref {
+    position: absolute;
+    right: -8px; bottom: -8px;
+    width: 32%;
+    aspect-ratio: 3 / 4;
+    background: var(--paper-soft);
+    padding: 8px 8px 22px;
+    box-shadow: 0 12px 28px rgba(20, 16, 10, 0.28), 0 1px 0 var(--rule-soft);
+    transform: rotate(2.5deg);
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease;
+    z-index: 2;
+  }
+  .piece-ref img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85) contrast(0.95);
+  }
+  .piece-ref::after {
+    content: "Referencia";
+    position: absolute;
+    left: 0; right: 0; bottom: 4px;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .piece:hover .piece-ref {
+    transform: rotate(0deg) translate(-6px, -6px) scale(1.06);
+    box-shadow: 0 24px 40px rgba(20, 16, 10, 0.32);
+  }
+  .piece-img-wrap { position: relative; }
+
+  .piece-caption {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .piece-title {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 4px;
+  }
+  .piece-meta {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .piece-price {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-style: italic;
+    color: var(--ochre-deep);
+    white-space: nowrap;
+  }
+
+  /* alternating aspect ratios for visual rhythm */
+  .piece:nth-child(6n+2) .piece-img-wrap { aspect-ratio: 1 / 1; }
+  .piece:nth-child(6n+5) .piece-img-wrap { aspect-ratio: 3 / 4; }
+  .piece:nth-child(6n+3) .piece-img-wrap { aspect-ratio: 5 / 4; }
+
+  /* retratos with refs use a uniform aspect to keep the polaroid chip consistent */
+  #retratos .piece .piece-img-wrap { aspect-ratio: 4 / 5; }
+
+  /* bodegones has 4 pieces: lay them out 2×2 for better rhythm */
+  #bodegones .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 72px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  #bodegones .piece .piece-img-wrap { aspect-ratio: 4 / 5; }
+
+  /* ---------- About ---------- */
+  .about {
+    max-width: 1480px; margin: 0 auto;
+    padding: 140px 56px;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 96px;
+    align-items: start;
+    border-bottom: 1px solid var(--rule);
+  }
+  .about-portrait {
+    aspect-ratio: 4 / 5;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    display: block;
+  }
+  .about-portrait::after {
+    content: "";
+  }
+  .about-lead {
+    font-family: var(--serif) !important;
+    font-size: 24px !important;
+    font-style: italic !important;
+    line-height: 1.4 !important;
+    color: var(--ink) !important;
+    margin-bottom: 28px !important;
+  }
+  .about-lead::first-letter {
+    font-size: 1.4em;
+    color: var(--ochre-deep);
+  }
+
+  /* ---------- Trajectory ---------- */
+  .trajectory {
+    max-width: 1480px; margin: 0 auto;
+    padding: 0 56px 140px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .traj-head {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 64px;
+    align-items: end;
+    padding-bottom: 72px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .traj-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 4.6vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .traj-title em { font-style: italic; color: var(--ochre-deep); }
+  .traj-blurb {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 460px;
+  }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: 80px;
+    margin-top: 56px;
+  }
+  .timeline li {
+    break-inside: avoid;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule-soft);
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 20px;
+    align-items: baseline;
+  }
+  .timeline li:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .t-year {
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--ochre-deep);
+    font-weight: 500;
+  }
+  .t-body {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+  .t-body b {
+    font-weight: 500;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .traj-foot {
+    margin: 56px 0 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-mute);
+    text-align: center;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+  @media (max-width: 1100px) {
+    .trajectory { padding: 0 32px 96px; }
+    .traj-head { grid-template-columns: 1fr; gap: 24px; padding-bottom: 48px; }
+    .timeline { columns: 1; }
+  }
+  .about-body { padding-top: 12px; }
+  .about-eyebrow {
+    font-family: var(--sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: var(--ink-mute);
+    margin-bottom: 28px;
+  }
+  .about-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 4.6vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin: 0 0 36px;
+  }
+  .about-title em { font-style: italic; color: var(--ochre-deep); }
+  .about-text p {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    max-width: 560px;
+  }
+  .about-facts {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .about-fact dt {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .about-fact dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 19px;
+    color: var(--ink);
+  }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    max-width: 1480px; margin: 0 auto;
+    padding: 80px 56px 56px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 48px;
+  }
+  .footer-mark {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .footer-mark img {
+    display: block;
+    height: 96px;
+    max-width: 360px;
+    object-fit: contain;
+    margin-bottom: 4px;
+  }
+  .footer-mark span {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 14px;
+  }
+  .footer-info {
+    text-align: right;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+  }
+  .footer-info b {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 18px;
+    display: block;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lb {
+    position: fixed; inset: 0;
+    background: color-mix(in srgb, var(--paper) 96%, var(--ink));
+    background: rgba(20, 16, 10, 0.94);
+    z-index: 100;
+    display: none;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .lb.is-open { display: grid; opacity: 1; }
+  .lb-img {
+    position: relative;
+    display: grid; place-items: center;
+    padding: 60px;
+    background: #181410;
+  }
+  .lb-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  }
+  .lb-side {
+    background: var(--paper);
+    padding: 80px 64px 64px;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+  }
+  .lb-close {
+    position: absolute;
+    top: 28px; right: 28px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--ink);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: grid; place-items: center;
+    z-index: 2;
+    transition: transform 0.2s ease;
+  }
+  .lb-close:hover { transform: rotate(90deg); }
+  .lb-nav {
+    position: absolute;
+    bottom: 32px;
+    display: flex; gap: 12px;
+  }
+  .lb-prev { left: 32px; }
+  .lb-next { left: calc(32px + 52px); }
+  .lb-nav button {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .lb-nav button:hover { background: var(--paper); color: var(--ink); }
+
+  .lb-eyebrow {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--ink-mute);
+    margin-bottom: 20px;
+  }
+  .lb-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 1.04;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .lb-year {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-mute);
+    margin-bottom: 36px;
+  }
+  .lb-specs {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 12px 24px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 36px;
+  }
+  .lb-specs dt {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    padding-top: 3px;
+  }
+  .lb-specs dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .lb-price {
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--ochre-deep);
+    margin-bottom: 28px;
+  }
+  .lb-price .label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .lb-cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 16px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    align-self: flex-start;
+    transition: background 0.2s ease;
+  }
+  .lb-cta:hover { background: var(--ochre-deep); }
+  .lb-cta::after { content: "→"; font-family: var(--serif); font-size: 16px; }
+  .lb-counter {
+    margin-top: auto;
+    padding-top: 32px;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--ink-mute);
+  }
+  .lb-ref {
+    margin: 0 0 32px;
+    padding: 24px 0 28px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .lb-ref[hidden] { display: none; }
+  .lb-ref-label {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--ink-mute);
+    margin-bottom: 16px;
+  }
+  .lb-ref img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    object-position: top center;
+    background: var(--paper-deep);
+    box-shadow: 0 8px 22px rgba(20, 16, 10, 0.2);
+  }
+  .lb-ref-note {
+    margin: 16px 0 0;
+    font-family: var(--serif);
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Tweaks panel ---------- */
+  .tweaks {
+    position: fixed;
+    right: 24px; bottom: 24px;
+    background: var(--paper-soft);
+    border: 1px solid var(--ink);
+    padding: 22px 24px 20px;
+    z-index: 80;
+    min-width: 260px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    display: none;
+  }
+  .tweaks.is-open { display: block; }
+  .tweaks-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tweaks-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+  }
+  .tweaks-close {
+    background: transparent; border: none; cursor: pointer;
+    font-size: 18px; line-height: 1; color: var(--ink);
+  }
+  .tweak-label {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    margin-bottom: 10px;
+  }
+  .tweak-seg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--ink);
+  }
+  .tweak-seg button {
+    background: transparent;
+    border: none;
+    padding: 10px 0;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--ink-soft);
+    border-right: 1px solid var(--ink);
+  }
+  .tweak-seg button:last-child { border-right: none; }
+  .tweak-seg button.is-active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1100px) {
+    .hero, .index, .about, .footer, .category { padding-left: 32px; padding-right: 32px; }
+    .hero { grid-template-columns: 1fr; gap: 48px; padding-top: 72px; padding-bottom: 56px; }
+    .index { grid-template-columns: 1fr; gap: 24px; }
+    .index-list { grid-template-columns: 1fr; }
+    .index-list li:nth-last-child(2) { border-bottom: none; }
+    .about { grid-template-columns: 1fr; gap: 56px; padding: 96px 32px; }
+    .footer { grid-template-columns: 1fr; text-align: left; }
+    .footer-info { text-align: left; }
+    .cat-head { grid-template-columns: 1fr; }
+    .cat-blurb { text-align: left; }
+    :root { --cols: 2 !important; --gap: 36px; }
+    .topbar-inner { padding: 16px 24px; }
+    .navlinks { display: none; }
+    .lb { grid-template-columns: 1fr; }
+    .lb-side { padding: 40px 28px; }
+    .lb-img { padding: 24px; min-height: 50vh; }
+  }
+  @media (max-width: 640px) {
+    :root { --cols: 1 !important; }
+    .hero-title { font-size: clamp(44px, 14vw, 80px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <div class="brand-mark"><img src="images/brand/firma.png" alt="" style="width:34px;height:24px;"/></div>
+      <div class="brand-text">
+        <div class="brand-name">Mario Orozco</div>
+        <div class="brand-sub">Catálogo 2026</div>
+      </div>
+    </a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#paisajes">Paisajes</a>
+      <a href="#retratos">Retratos</a>
+      <a href="#abstractos">Abstractos</a>
+      <a href="#animales">Animales</a>
+      <a href="#bodegones">Bodegones</a>
+      <a href="#flores">Flores</a>
+      <a href="#surrealistas">Surrealistas</a>
+      <a href="#sobre">Acerca de</a>
+      <a href="#trayectoria">Trayectoria</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" data-screen-label="00 Portada">
+  <div>
+    <div class="hero-eyebrow">Obra reciente · 2024 — 2026</div>
+    <h1 class="hero-title">Mario<br/><em>Orozco</em></h1>
+    <dl class="hero-meta">
+      <dt>Origen</dt><dd>Zacatecas, México</dd>
+      <dt>Reside</dt><dd>Guadalajara, Jalisco</dd>
+      <dt>Estudio</dt><dd>Jardín del Arte · Glorieta Chapalita</dd>
+      <dt>Disciplina</dt><dd>Óleo y técnica mixta sobre tela</dd>
+    </dl>
+  </div>
+  <aside class="hero-aside">
+    <p>Un cuerpo de obra que se mueve entre el paisaje íntimo, el retrato y la abstracción — la disciplina del oficio aplicada a una mirada profundamente mexicana.</p>
+
+    <!-- Real signature, extracted from photo -->
+    <img class="signature" src="images/brand/firma.png" alt="Firma del artista — M. Orozco L." />
+    <div class="signature-note">Firma del artista</div>
+  </aside>
+</section>
+
+<!-- ============ INDEX ============ -->
+<section class="index">
+  <h2>Índice de la obra</h2>
+  <ol class="index-list" id="indexList">
+    <!-- populated by JS -->
+  </ol>
+</section>
+
+<!-- ============ CATEGORIES ============ -->
+<section class="category" id="paisajes" data-screen-label="01 Paisajes">
+  <header class="cat-head">
+    <div>
+      <div class="cat-eyebrow">I · Paisajes</div>
+      <h2 class="cat-title">Paisajes</h2>
+    </div>
+    <p class="cat-blurb">Escenas de agua, sierra y cielo. La pintura como ventana hacia un lugar reconocible — y lejano al mismo tiempo.</p>
+  </header>
+  <div class="grid" data-grid></div>
+</section>
+
+<section class="category" id="retratos" data-screen-label="02 Retratos">
+  <header class="cat-head">
+    <div>
+      <div class="cat-eyebrow">II · Retratos</div>
+      <h2 class="cat-title">Retratos</h2>
+    </div>
+    <p class="cat-blurb">Rostros construidos por capas y planos. Cada uno toma como punto de partida una fotografía — incluida aquí para mostrar el camino entre el natural y la tela.</p>
+  </header>
+  <div class="grid" data-grid></div>
+</section>
+
+<section class="category" id="abstractos" data-screen-label="03 Abstractos">
+  <header class="cat-head">
+    <div>
+      <div class="cat-eyebrow">III · Abstractos</div>
+      <h2 class="cat-title">Abstractos</h2>
+    </div>
+    <p class="cat-blurb">Pigmento que fluye sobre tela. Una serie hecha de gesto, gravedad y silencio entre formas.</p>
+  </header>
+  <div class="grid" data-grid></div>
+</section>
+
+<section class="category" id="animales" data-screen-label="04 Animales">
+  <header class="cat-head">
+    <div>
+      <div class="cat-eyebrow">IV · Animales</div>
+      <h2 class="cat-title">Animales</h2>
+    </div>
+    <p class="cat-blurb">Caballos, búhos, gallos, elefantes — figuras del reino animal pintadas entre el realismo y el gesto expresivo del color.</p>
+  </header>
+  <div class="grid" data-grid></div>
+</section>
+
+<section class="category" id="bodegones" data-screen-label="05 Bodegones">
+  <header class="cat-head">
+    <div>
+      <div class="cat-eyebrow">V · Bodegones</div>
+      <h2 class="cat-title">Bodegones</h2>
+    </div>
+    <p class="cat-blurb">Objetos de lo cotidiano — unos tenis, un tablero, los dados, los trompos. Bodegones contemporáneos que miran al objeto común con el rigor de la pintura clásica.</p>
+  </header>
+  <div class="grid" data-grid></div>
+</section>
+
+<section class="category" id="flores" data-screen-label="06 Flores">
+  <header class="cat-head">
+    <div>
+      <div class="cat-eyebrow">VI · Flores</div>
+      <h2 class="cat-title">Flores</h2>
+    </div>
+    <p class="cat-blurb">Estudios botánicos y naturales — amapolas, hojas y plumas tratadas con técnica mixta, pan de oro y gestos líquidos sobre la tela.</p>
+  </header>
+  <div class="grid" data-grid></div>
+</section>
+
+<section class="category" id="surrealistas" data-screen-label="07 Surrealistas">
+  <header class="cat-head">
+    <div>
+      <div class="cat-eyebrow">VII · Surrealistas</div>
+      <h2 class="cat-title">Surrealistas</h2>
+    </div>
+    <p class="cat-blurb">Donde lo cotidiano se desplaza. Composiciones oníricas que alargan el límite de lo posible en la tela.</p>
+  </header>
+  <div class="grid" data-grid></div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="sobre" data-screen-label="08 Acerca de">
+  <div class="about-portrait">
+    <img src="images/brand/artista.jpg" alt="Mario Orozco pintando frente a la parroquia de El Plateado, Zacatecas" />
+  </div>
+  <div class="about-body">
+    <div class="about-eyebrow">Acerca del artista</div>
+    <h2 class="about-title">Mario<br/><em>Orozco L.</em></h2>
+    <div class="about-text">
+      <p class="about-lead">Artista autodidacta que presenta en su obra personajes que fungen como sueños, visiones, fantasías, anhelos — un espejo de su propia vida.</p>
+      <p>Originario de El Plateado de Joaquín Amaro, Zacatecas, Mario Orozco L. desarrolla su oficio durante más de cuatro décadas, con el caballete instalado lo mismo en plazas de pueblo que en recintos institucionales. Desde 1999 forma parte del Jardín del Arte de la Glorieta Chapalita, en Guadalajara; en 2003 fue nombrado representante del propio Jardín, cargo que ostenta hasta la fecha.</p>
+    </div>
+    <dl class="about-facts">
+      <div class="about-fact"><dt>Origen</dt><dd>El Plateado, Zacatecas</dd></div>
+      <div class="about-fact"><dt>Estudio</dt><dd>Glorieta Chapalita</dd></div>
+      <div class="about-fact"><dt>Activo desde</dt><dd>1984</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ TRAJECTORY ============ -->
+<section class="trajectory" id="trayectoria" data-screen-label="09 Trayectoria">
+  <header class="traj-head">
+    <div class="cat-eyebrow">Trayectoria</div>
+    <h2 class="traj-title">Cuatro décadas<br/><em>de oficio.</em></h2>
+    <p class="traj-blurb">Una selección de exposiciones individuales, colectivas y reconocimientos de la trayectoria del artista.</p>
+  </header>
+  <ol class="timeline">
+    <li><span class="t-year">1984</span><span class="t-body"><b>Primera exposición individual.</b> Salón parroquial de El Plateado, Zac.</span></li>
+    <li><span class="t-year">1984</span><span class="t-body">Exposición colectiva en el Consejo Estatal del Deporte de Zacatecas.</span></li>
+    <li><span class="t-year">1999</span><span class="t-body"><b>Ingreso al Jardín del Arte</b> de la Glorieta Chapalita, Guadalajara.</span></li>
+    <li><span class="t-year">2003</span><span class="t-body">Nombrado <b>Representante del Jardín del Arte</b> de la Glorieta Chapalita.</span></li>
+    <li><span class="t-year">2004</span><span class="t-body">Segundo lugar en el concurso “La Madre”, Jardín del Arte de la Glorieta Chapalita.</span></li>
+    <li><span class="t-year">2005</span><span class="t-body">Exposición individual en la plaza principal de El Plateado, Zac.</span></li>
+    <li><span class="t-year">2005</span><span class="t-body"><b>Primer lugar</b> en el concurso de pintura “El Mariachi y la Charrería”.</span></li>
+    <li><span class="t-year">2005</span><span class="t-body">Exposición y concurso “La Salud Mental y sus Fronteras”, Presidencia Municipal de Zapopan.</span></li>
+    <li><span class="t-year">2012</span><span class="t-body">Exposición colectiva en el Supremo Tribunal de Justicia del Estado de Jalisco.</span></li>
+    <li><span class="t-year">2014</span><span class="t-body">Exposición colectiva en el Palacio Legislativo de Jalisco.</span></li>
+    <li><span class="t-year">2016</span><span class="t-body">Exposición colectiva “Percepciones” en el Centro Cultural González Gallo, Chapala, Jal.</span></li>
+    <li><span class="t-year">2017</span><span class="t-body">Exposición individual en la Galería del Centro Metropolitano del Adulto Mayor, Zapopan.</span></li>
+    <li><span class="t-year">2018</span><span class="t-body">Exposición colectiva “Zapopan y los Niños”, Presidencia Municipal de Zapopan.</span></li>
+  </ol>
+  <p class="traj-foot">Reconocimientos del Ayuntamiento de Zapopan, Ayuntamiento de El Plateado de Joaquín Amaro, Gobierno del Estado de Zacatecas, Junta de Colonos de Chapalita y los integrantes del Jardín del Arte de Chapalita.</p>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-mark">
+    <img src="images/brand/firma.png" alt="M. Orozco L." />
+    <span>Pintor · Catálogo 2026</span>
+  </div>
+  <div class="footer-info">
+    <b>Adquisición y comisiones</b>
+    Jardín del Arte · Glorieta Chapalita, Guadalajara<br/>
+    Todos los domingos · 10:00 – 17:00<br/>
+    Contacto disponible bajo solicitud
+  </div>
+</footer>
+
+</main>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lb" id="lightbox" aria-hidden="true">
+  <div class="lb-img">
+    <button class="lb-close" id="lbClose" aria-label="Cerrar">✕</button>
+    <img id="lbImage" alt="" />
+    <div class="lb-nav">
+      <button class="lb-prev" id="lbPrev" aria-label="Anterior">‹</button>
+      <button class="lb-next" id="lbNext" aria-label="Siguiente">›</button>
+    </div>
+  </div>
+  <aside class="lb-side">
+    <div class="lb-eyebrow" id="lbCat">—</div>
+    <h2 class="lb-title" id="lbTitle">—</h2>
+    <div class="lb-year" id="lbYear">—</div>
+    <dl class="lb-specs">
+      <dt>Técnica</dt><dd id="lbTech">—</dd>
+      <dt>Medidas</dt><dd id="lbSize">—</dd>
+      <dt>Soporte</dt><dd id="lbSupport">Tela montada en bastidor</dd>
+      <dt>Firma</dt><dd>M. Orozco L. (esquina inferior)</dd>
+    </dl>
+    <div class="lb-price">
+      <span class="label">Precio</span>
+      <span id="lbPrice">—</span>
+    </div>
+    <div class="lb-ref" id="lbRef" hidden>
+      <div class="lb-ref-label">Fotografía de referencia</div>
+      <img id="lbRefImg" alt="" />
+      <p class="lb-ref-note">El retrato fue trabajado a partir de esta fotografía entregada por el cliente.</p>
+    </div>
+    <button class="lb-cta" id="lbCta">Me interesa esta obra</button>
+    <div class="lb-counter" id="lbCounter">— / —</div>
+  </aside>
+</div>
+
+<!-- ============ TWEAKS PANEL ============ -->
+<div class="tweaks" id="tweaks">
+  <div class="tweaks-head">
+    <div class="tweaks-title">Tweaks</div>
+    <button class="tweaks-close" id="tweaksClose" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="tweak-label">Densidad del grid</div>
+  <div class="tweak-seg" id="densitySeg">
+    <button data-density="compact">Compacto</button>
+    <button data-density="regular">Regular</button>
+    <button data-density="airy">Amplio</button>
+  </div>
+</div>
+
+<script>
+/* ---------- Tweaks defaults (host-editable JSON) ---------- */
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "density": "airy"
+}/*EDITMODE-END*/;
+
+/* ---------- Catalog data ---------- */
+const CATEGORIES = [
+  {
+    slug: "paisajes",
+    pieces: [
+      { title: "Pescador al amanecer",  size: "100×110 cm", tech: "Óleo sobre tela", price: 6800, year: 2025, img: "images/paisajes/01.jpeg" },
+      { title: "Skyline contemporáneo", size: "60×120 cm",  tech: "Óleo sobre tela", price: 5400, year: 2024, img: "images/paisajes/02.jpeg" },
+      { title: "Veleros en regata",    size: "70×150 cm",  tech: "Óleo sobre tela", price: 6400, year: 2025, img: "images/paisajes/03.jpeg" },
+      { title: "Marina en calma",      size: "70×150 cm",  tech: "Óleo sobre tela", price: 6200, year: 2025, img: "images/paisajes/04.jpeg" },
+      { title: "Puerto al atardecer",  size: "70×150 cm",  tech: "Óleo sobre tela", price: 6000, year: 2024, img: "images/paisajes/05.jpeg" },
+      { title: "Ciudad de niebla",     size: "60×120 cm",  tech: "Óleo sobre tela", price: 5800, year: 2026, img: "images/paisajes/06.jpeg" },
+    ],
+  },
+  {
+    slug: "retratos",
+    pieces: [
+      { title: "De memoria",            size: "60×80 cm",   tech: "Óleo sobre tela",         price: 5200, year: 2025, img: "images/retratos/01.jpeg", ref: "images/retratos/ref-01.jpeg" },
+      { title: "Reflejo",               size: "70×90 cm",   tech: "Óleo sobre tela",         price: 6200, year: 2025, img: "images/retratos/02.jpeg", ref: "images/retratos/ref-02.jpeg" },
+      { title: "Frente al espejo",      size: "60×80 cm",   tech: "Óleo sobre tela",         price: 5400, year: 2024, img: "images/retratos/03.jpeg", ref: "images/retratos/ref-03.jpeg" },
+      { title: "Vendedora de flores",   size: "80×100 cm",  tech: "Óleo sobre tela",         price: 6400, year: 2025, img: "images/retratos/04.jpeg", ref: "images/retratos/ref-04.jpeg" },
+      { title: "Julia Loera",              size: "70×90 cm",   tech: "Óleo y técnica mixta",    price: 5800, year: 2024, img: "images/retratos/05.jpeg", ref: "images/retratos/ref-05.jpeg" },
+      { title: "De perfil",             size: "60×80 cm",   tech: "Óleo sobre tela",         price: 5000, year: 2026, img: "images/retratos/06.jpeg", ref: "images/retratos/ref-06.jpeg" },
+    ],
+  },
+  {
+    slug: "abstractos",
+    pieces: [
+      { title: "Corriente",             size: "120×80 cm",  tech: "Técnica mixta sobre tela", price: 6200, year: 2025, img: "images/abstractos/01.jpeg" },
+      { title: "Constelación I",        size: "100×80 cm",  tech: "Técnica mixta sobre tela", price: 5800, year: 2025, img: "images/abstractos/02.jpeg" },
+      { title: "Mareas",                size: "120×90 cm",  tech: "Técnica mixta sobre tela", price: 6400, year: 2024, img: "images/abstractos/03.jpeg" },
+      { title: "Pulso",                 size: "100×100 cm", tech: "Técnica mixta sobre tela", price: 6000, year: 2025, img: "images/abstractos/04.jpeg" },
+      { title: "Ecos",                  size: "90×120 cm",  tech: "Técnica mixta sobre tela", price: 5600, year: 2026, img: "images/abstractos/05.jpeg" },
+      { title: "Constelación II",       size: "80×100 cm",  tech: "Técnica mixta sobre tela", price: 5200, year: 2025, img: "images/abstractos/06.jpeg" },
+    ],
+  },
+  {
+    slug: "animales",
+    pieces: [
+      { title: "Brioso",              size: "90×120 cm", tech: "Óleo sobre tela", price: 6800, year: 2025, img: "images/animales/01.jpeg" },
+      { title: "Búho real",           size: "70×90 cm",  tech: "Técnica mixta sobre tela", price: 5400, year: 2025, img: "images/animales/02.jpeg" },
+      { title: "Caballo andaluz",     size: "90×120 cm", tech: "Óleo sobre tela", price: 6800, year: 2025, img: "images/animales/03.jpeg" },
+      { title: "Crin al viento",      size: "80×100 cm", tech: "Óleo sobre tela", price: 6200, year: 2026, img: "images/animales/04.jpeg" },
+      { title: "Gallo de pelea",      size: "80×80 cm",  tech: "Óleo sobre tela", price: 5400, year: 2025, img: "images/animales/05.jpeg" },
+      { title: "Elefante en agua",    size: "90×120 cm", tech: "Técnica mixta sobre tela", price: 6400, year: 2024, img: "images/animales/06.jpeg" },
+    ],
+  },
+  {
+    slug: "bodegones",
+    pieces: [
+      { title: "All Star",          size: "60×90 cm",  tech: "Óleo sobre tela", price: 5400, year: 2025, img: "images/bodegones/01.jpeg" },
+      { title: "Jaque",             size: "60×120 cm", tech: "Óleo sobre tela", price: 5800, year: 2024, img: "images/bodegones/02.jpeg" },
+      { title: "Tres dados",        size: "70×80 cm",  tech: "Óleo sobre tela", price: 5200, year: 2025, img: "images/bodegones/03.jpeg" },
+      { title: "Trompos",           size: "80×90 cm",  tech: "Óleo y técnica mixta", price: 5600, year: 2025, img: "images/bodegones/04.jpeg" },
+    ],
+  },
+  {
+    slug: "flores",
+    pieces: [
+      { title: "Plumas de viento",  size: "60×150 cm", tech: "Técnica mixta y pan de oro", price: 5800, year: 2025, img: "images/flores/01.jpeg" },
+      { title: "Otoño",             size: "50×110 cm", tech: "Técnica mixta sobre tela",   price: 5200, year: 2024, img: "images/flores/02.jpeg" },
+      { title: "Anemonas en azul",  size: "100×100 cm",tech: "Óleo sobre tela",           price: 6200, year: 2025, img: "images/flores/03.jpeg" },
+      { title: "Hojarasca",         size: "70×90 cm",  tech: "Técnica mixta sobre tela",   price: 5000, year: 2025, img: "images/flores/04.jpeg" },
+      { title: "Anemonas en gris",  size: "100×100 cm",tech: "Óleo sobre tela",           price: 6200, year: 2026, img: "images/flores/05.jpeg" },
+      { title: "Amapolas de oro",   size: "80×150 cm", tech: "Óleo y pan de oro",         price: 6800, year: 2026, img: "images/flores/06.jpeg" },
+    ],
+  },
+  {
+    slug: "surrealistas",
+    pieces: [
+      { title: "Geppetto",          size: "100×100 cm",tech: "Óleo sobre tela", price: 6800, year: 2025, img: "images/surrealistas/01.jpeg" },
+      { title: "Sueño con alas",    size: "100×100 cm",tech: "Óleo sobre tela", price: 6800, year: 2025, img: "images/surrealistas/02.jpeg" },
+      { title: "El padre y el hijo",size: "80×100 cm", tech: "Óleo sobre tela", price: 6200, year: 2024, img: "images/surrealistas/03.jpeg" },
+      { title: "Bonaparte",         size: "100×140 cm",tech: "Óleo sobre tela", price: 7000, year: 2025, img: "images/surrealistas/04.jpeg" },
+      { title: "Tinta de colores",  size: "80×100 cm", tech: "Técnica mixta",    price: 5800, year: 2026, img: "images/surrealistas/05.jpeg" },
+      { title: "Mirada de turquesa",size: "80×100 cm", tech: "Óleo sobre tela", price: 6400, year: 2024, img: "images/surrealistas/06.jpeg" },
+    ],
+  },
+];
+
+const CAT_NAMES = {
+  paisajes: "Paisajes",
+  retratos: "Retratos",
+  abstractos: "Abstractos",
+  animales: "Animales",
+  bodegones: "Bodegones",
+  flores: "Flores",
+  surrealistas: "Surrealistas",
+};
+
+const fmtMXN = (n) => "$" + n.toLocaleString("es-MX") + " MXN";
+
+/* ---------- Render grids ---------- */
+const ALL = [];
+document.querySelectorAll(".category").forEach((sec) => {
+  const slug = sec.id;
+  const cat = CATEGORIES.find((c) => c.slug === slug);
+  if (!cat) return;
+  const grid = sec.querySelector("[data-grid]");
+  cat.pieces.forEach((p, i) => {
+    const globalIndex = ALL.length;
+    ALL.push({ ...p, catSlug: slug });
+    const fig = document.createElement("figure");
+    fig.className = "piece";
+    fig.dataset.idx = String(globalIndex);
+    fig.innerHTML = `
+      <div class="piece-frame">
+        <div class="piece-img-wrap">
+          <img loading="lazy" src="${p.img}" alt="${p.title} — Mario Orozco" />
+          ${p.ref ? `<div class="piece-ref"><img loading="lazy" src="${p.ref}" alt="Fotografía de referencia" /></div>` : ""}
+        </div>
+        <figcaption class="piece-caption">
+          <div>
+            <h3 class="piece-title">${p.title}</h3>
+            <div class="piece-meta">${p.tech} · ${p.size}</div>
+          </div>
+          <div class="piece-price">${fmtMXN(p.price)}</div>
+        </figcaption>
+      </div>
+    `;
+    fig.addEventListener("click", () => openLightbox(globalIndex));
+    grid.appendChild(fig);
+  });
+});
+
+/* ---------- Index list ---------- */
+const indexList = document.getElementById("indexList");
+CATEGORIES.forEach((c, i) => {
+  const li = document.createElement("li");
+  const name = CAT_NAMES[c.slug];
+  const count = c.pieces.length;
+  li.innerHTML = `
+    <a href="#${c.slug}">
+      <span class="index-num">${String(i + 1).padStart(2, "0")}</span>
+      <span class="index-name">${name}</span>
+      <span class="index-count">${count} obras</span>
+    </a>
+  `;
+  indexList.appendChild(li);
+});
+
+/* ---------- Lightbox ---------- */
+const lb = document.getElementById("lightbox");
+const lbImg = document.getElementById("lbImage");
+const lbCat = document.getElementById("lbCat");
+const lbTitle = document.getElementById("lbTitle");
+const lbYear = document.getElementById("lbYear");
+const lbTech = document.getElementById("lbTech");
+const lbSize = document.getElementById("lbSize");
+const lbPrice = document.getElementById("lbPrice");
+const lbCounter = document.getElementById("lbCounter");
+let lbIndex = 0;
+
+function openLightbox(i) {
+  lbIndex = i;
+  paintLightbox();
+  lb.classList.add("is-open");
+  lb.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  lb.classList.remove("is-open");
+  lb.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+function paintLightbox() {
+  const p = ALL[lbIndex];
+  lbImg.src = p.img;
+  lbImg.alt = p.title + " — Mario Orozco";
+  lbCat.textContent = CAT_NAMES[p.catSlug] + " · obra " + String(lbIndex + 1).padStart(3, "0");
+  lbTitle.textContent = p.title;
+  lbYear.textContent = p.year;
+  lbTech.textContent = p.tech;
+  lbSize.textContent = p.size;
+  lbPrice.textContent = fmtMXN(p.price);
+  lbCounter.textContent = String(lbIndex + 1).padStart(2, "0") + " / " + String(ALL.length).padStart(2, "0");
+  const lbRef = document.getElementById("lbRef");
+  const lbRefImg = document.getElementById("lbRefImg");
+  if (p.ref) {
+    lbRef.hidden = false;
+    lbRefImg.src = p.ref;
+    lbRefImg.alt = "Fotografía de referencia para " + p.title;
+  } else {
+    lbRef.hidden = true;
+    lbRefImg.src = "";
+  }
+}
+function lbPrev() { lbIndex = (lbIndex - 1 + ALL.length) % ALL.length; paintLightbox(); }
+function lbNext() { lbIndex = (lbIndex + 1) % ALL.length; paintLightbox(); }
+document.getElementById("lbClose").addEventListener("click", closeLightbox);
+document.getElementById("lbPrev").addEventListener("click", lbPrev);
+document.getElementById("lbNext").addEventListener("click", lbNext);
+lb.addEventListener("click", (e) => { if (e.target === lb) closeLightbox(); });
+document.addEventListener("keydown", (e) => {
+  if (!lb.classList.contains("is-open")) return;
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowLeft") lbPrev();
+  if (e.key === "ArrowRight") lbNext();
+});
+
+/* ---------- Active nav highlight on scroll ---------- */
+const navlinks = document.querySelectorAll("#navlinks a");
+const sections = [...document.querySelectorAll(".category, #sobre, #trayectoria")];
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navlinks.forEach((a) => a.classList.toggle("is-current", a.getAttribute("href") === "#" + id));
+    }
+  });
+}, { rootMargin: "-40% 0px -55% 0px" });
+sections.forEach((s) => io.observe(s));
+
+/* ---------- Tweaks: density ---------- */
+const tweaks = document.getElementById("tweaks");
+const densitySeg = document.getElementById("densitySeg");
+let currentDensity = TWEAK_DEFAULTS.density || "regular";
+
+function applyDensity(d) {
+  currentDensity = d;
+  const root = document.documentElement;
+  if (d === "compact") { root.style.setProperty("--cols", "4"); root.style.setProperty("--gap", "40px"); }
+  else if (d === "airy") { root.style.setProperty("--cols", "2"); root.style.setProperty("--gap", "80px"); }
+  else { root.style.setProperty("--cols", "3"); root.style.setProperty("--gap", "56px"); }
+  densitySeg.querySelectorAll("button").forEach((b) => {
+    b.classList.toggle("is-active", b.dataset.density === d);
+  });
+}
+applyDensity(currentDensity);
+
+densitySeg.addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-density]");
+  if (!btn) return;
+  const d = btn.dataset.density;
+  applyDensity(d);
+  try {
+    window.parent.postMessage({ type: "__edit_mode_set_keys", edits: { density: d } }, "*");
+  } catch (err) {}
+});
+
+/* ---------- Tweaks panel host protocol ---------- */
+window.addEventListener("message", (e) => {
+  const t = e.data && e.data.type;
+  if (t === "__activate_edit_mode") tweaks.classList.add("is-open");
+  if (t === "__deactivate_edit_mode") tweaks.classList.remove("is-open");
+});
+document.getElementById("tweaksClose").addEventListener("click", () => {
+  tweaks.classList.remove("is-open");
+  try { window.parent.postMessage({ type: "__edit_mode_dismissed" }, "*"); } catch (err) {}
+});
+try { window.parent.postMessage({ type: "__edit_mode_available" }, "*"); } catch (err) {}
+</script>
+
+</body>
+</html>

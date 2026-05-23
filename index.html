@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <style>
   :root {
     --paper:        #f1e9d8;
@@ -28,7 +29,8 @@
   }
 
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  html { overflow-x: hidden; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); max-width: 100%; }
   body {
     font-family: var(--sans);
     font-size: 15px;
@@ -840,6 +842,27 @@
     padding-right: 28px;
   }
   .qf-field select option { background: var(--ink); color: var(--paper); }
+  .qf-captcha {
+    margin-top: 8px;
+    display: grid;
+    gap: 10px;
+  }
+  .qf-captcha-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
+  }
+  .qf-status {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.45;
+    display: none;
+  }
+  .qf-status.is-ok  { display: block; color: color-mix(in srgb, var(--ochre) 92%, white); }
+  .qf-status.is-err { display: block; color: #f0a48f; }
   .qf-actions {
     display: flex; gap: 14px;
     margin-top: 12px;
@@ -1273,7 +1296,22 @@
   }
   @media (max-width: 640px) {
     :root { --cols: 1 !important; }
-    .hero-title { font-size: clamp(44px, 14vw, 80px); }
+    .hero-inner, .index, .about, .footer, .category,
+    .quote-inner, .trajectory { padding-left: 20px; padding-right: 20px; }
+    .topbar-inner { padding: 14px 20px; }
+    .hero-title { font-size: clamp(40px, 13vw, 80px); }
+    .cat-title { font-size: clamp(38px, 11vw, 64px); }
+    .quote-title { font-size: clamp(36px, 10vw, 64px); }
+    .about-title, .traj-title { font-size: clamp(34px, 9vw, 64px); }
+    .cat-title, .hero-title, .quote-title,
+    .about-title, .traj-title { overflow-wrap: break-word; }
+    #bodegones .grid { grid-template-columns: 1fr !important; gap: 40px; }
+    .about-facts { grid-template-columns: 1fr 1fr; gap: 18px; }
+    .wa-card { padding: 32px 24px; }
+    .wa-card h3 { font-size: 30px; }
+  }
+  @media (max-width: 360px) {
+    .qf-captcha .h-captcha { transform: scale(0.9); transform-origin: top left; }
   }
 </style>
 </head>
@@ -1517,6 +1555,11 @@
         <label for="qf-msg">Mensaje</label>
         <textarea id="qf-msg" name="message" placeholder="¿Qué obra te interesa? ¿Buscas algo a medida, una comisión? Cuéntanos."></textarea>
       </div>
+      <div class="qf-captcha">
+        <span class="qf-captcha-label">Verificación de seguridad — necesaria para enviar por correo</span>
+        <div class="h-captcha" data-sitekey="1b3a7e8e-9d80-49ae-a7d8-a5eacc88e73a" data-theme="light"></div>
+      </div>
+      <div class="qf-status" id="qfStatus" role="status" aria-live="polite"></div>
       <div class="qf-actions">
         <button type="submit" class="btn btn-light">
           <span>Enviar por WhatsApp</span>
@@ -1869,7 +1912,7 @@ sections.forEach((s) => io.observe(s));
 /* ---------- Quote form + WhatsApp ---------- */
 const WA_PHONE = "523331841921"; // número real (formato internacional, sin "+")
 const WA_DISPLAY = "+52 33 3184 1921";
-const EMAIL_TO = "morozcoarte1124@gmail.com";
+const WEB3FORMS_ACCESS_KEY = "6d7d7d1d-6f8a-4354-9203-a43ab49cbd75";
 
 // Update WhatsApp number display
 document.querySelectorAll("#waPhoneDisplay").forEach((el) => { el.textContent = WA_DISPLAY; });
@@ -1924,13 +1967,71 @@ if (quoteForm) {
     window.open(url, "_blank", "noopener");
   });
 }
+const qfStatus = document.getElementById("qfStatus");
+function showQfStatus(msg, kind) {
+  if (!qfStatus) return;
+  qfStatus.textContent = msg;
+  qfStatus.className = "qf-status" + (kind ? " is-" + kind : "");
+}
+function resetQuoteCaptcha() {
+  if (window.hcaptcha) { try { window.hcaptcha.reset(); } catch (err) {} }
+}
+
 const qfEmailBtn = document.getElementById("qfEmail");
 if (qfEmailBtn) {
-  qfEmailBtn.addEventListener("click", () => {
-    const txt = buildQuoteMessage();
-    const subject = "Cotización de obra — Catálogo Mario Orozco";
-    const url = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(txt)}`;
-    window.location.href = url;
+  qfEmailBtn.addEventListener("click", async () => {
+    const name = document.getElementById("qf-name").value.trim();
+    if (!name) {
+      document.getElementById("qf-name").focus();
+      showQfStatus("Por favor escribe tu nombre antes de enviar.", "err");
+      return;
+    }
+
+    const captchaToken = (new FormData(quoteForm).get("h-captcha-response") || "").toString();
+    if (!captchaToken) {
+      showQfStatus("Completa la verificación de seguridad antes de enviar por correo.", "err");
+      return;
+    }
+
+    const phone = document.getElementById("qf-phone").value.trim();
+    const email = document.getElementById("qf-email").value.trim();
+    const piece = document.getElementById("qf-piece").value.trim();
+    const message = document.getElementById("qf-msg").value.trim();
+
+    const payload = new FormData();
+    payload.append("access_key", WEB3FORMS_ACCESS_KEY);
+    payload.append("subject", "Cotización de obra — Catálogo Mario Orozco");
+    payload.append("from_name", name + " · Catálogo Mario Orozco");
+    if (email) payload.append("replyto", email);
+    payload.append("Nombre", name);
+    if (phone) payload.append("Teléfono", phone);
+    if (email) payload.append("Correo", email);
+    if (piece) payload.append("Obra de interés", piece);
+    if (message) payload.append("Mensaje", message);
+    payload.append("h-captcha-response", captchaToken);
+    payload.append("botcheck", "");
+
+    const labelEl = qfEmailBtn.querySelector("span");
+    const originalLabel = labelEl.textContent;
+    qfEmailBtn.disabled = true;
+    labelEl.textContent = "Enviando…";
+    showQfStatus("", "");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: payload });
+      const result = await res.json();
+      if (res.ok && result.success) {
+        showQfStatus("¡Gracias! Tu mensaje se envió correctamente. Mario te responderá muy pronto.", "ok");
+        quoteForm.reset();
+      } else {
+        showQfStatus(result.message || "No se pudo enviar el mensaje. Intenta de nuevo en unos minutos o escríbenos por WhatsApp.", "err");
+      }
+    } catch (err) {
+      showQfStatus("No se pudo conectar. Revisa tu internet e intenta de nuevo, o escríbenos por WhatsApp.", "err");
+    } finally {
+      resetQuoteCaptcha();
+      qfEmailBtn.disabled = false;
+      labelEl.textContent = originalLabel;
+    }
   });
 }
 
